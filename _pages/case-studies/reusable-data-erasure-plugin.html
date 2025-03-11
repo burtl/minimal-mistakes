@@ -1,0 +1,73 @@
+---
+layout: single
+title: "Reusable Data Erasure Adapter"
+permalink: /projects/case-studies/reusable-data-erasure-plugin/
+---
+
+<div class="case-study-container">
+  <header class="case-study-header">
+    <p class="case-study-summary">A reusable plugin designed to streamline cross-team integrations for data erasure requests.</p>
+  </header>
+
+  <section class="case-study-content">
+    <h2>1. Overview</h2>
+    <p>
+      In this case study, I share my journey in developing a reusable data erasure adapter at my previous organization — a solution created to simplify and standardize the process of integrating GDPR erasure requests across multiple teams. The goal was to replace the time‐consuming, error‐prone practice of each team writing their own adapter with a single, unified, plug-and-play solution. This project streamlined integrations by supporting both legacy and modern messaging systems while significantly reducing development time and improving overall system reliability.
+    </p>
+
+    <h2>2. Problem Statement</h2>
+    <p>
+      Prior to this project, each team was responsible for building their own adapter to process customer data erasure requests. This approach required duplicating boilerplate code, managing multiple messaging systems, and handling error routines independently. The result was a lengthy ramp-up time — often around six weeks per team — along with inconsistent error handling and a higher likelihood of production issues. It became clear that a more unified and flexible approach was necessary to support both legacy and contemporary technologies.
+    </p>
+
+    <h2>3. Solution &amp; Alternative Approaches</h2>
+    <p>
+      To address these challenges, I designed and implemented a reusable adapter as a Spring Boot configuration packaged into a Maven plugin. This plug-and-play model enabled teams to simply add the dependency and implement a single Java interface for their specific business logic.
+    </p>
+    <p>
+      During the early stages, I explored several alternatives — such as maintaining individual team-specific adapters or creating separate configurations for different messaging systems. However, these options either failed to scale or added unnecessary complexity. Ultimately, the unified configuration was chosen because it encapsulated default web services, robust error handling, and flexible messaging integration within one reusable module. This design provided backward compatibility for teams using older systems while allowing others to transition effortlessly to modern platforms.
+    </p>
+
+    <h2>4. Technical Implementation</h2>
+    <p>
+      The adapter was built using Spring Boot, taking full advantage of its auto-configuration and modular design principles. I packaged the integration logic as a Maven plugin that:
+    </p>
+    <ul>
+      <li><strong>Plug-and-Play Configuration:</strong> Encapsulates repetitive tasks such as default web services and error handling, requiring teams to implement only a simple interface.</li>
+      <li><strong>Dual Messaging Support:</strong> Supports both legacy and modern messaging systems through configurable settings, ensuring seamless integration regardless of the existing infrastructure.</li>
+      <li><strong>Asynchronous Processing:</strong> Utilizes Apache Camel to establish JMS routes for asynchronous processing. Detailed logs and diagrams document how erasure requests are queued, processed, and updated with statuses (PENDING, COMPLETE, FAILED) in real time.</li>
+      <li><strong>Extensive Documentation &amp; Training:</strong> Includes comprehensive checklists, guides, and hands-on training sessions to ensure smooth onboarding and long-term support across teams.</li>
+    </ul>
+    <p>
+      Below is an example code snippet representing the core interface of the adapter:
+    </p>
+    <pre><code>
+// Example snippet of the adapter's plug-and-play interface
+public interface DataErasureAdapter {
+    void processErasureRequest(CustomerErasureRequest request);
+}
+    </code></pre>
+    <p>
+      This technical foundation, along with rigorous testing using tools like Grafana and log monitoring, allowed for iterative refinement until all specifications were met.
+    </p>
+
+    <h2>5. Results &amp; Impact</h2>
+    <p>
+      The implementation of the reusable data erasure adapter delivered several tangible benefits:
+    </p>
+    <ul>
+      <li><strong>Efficiency Gains:</strong> Reduced integration time by approximately 40-60%, allowing teams to focus on their core business logic instead of repetitive coding tasks.</li>
+      <li><strong>Improved Reliability:</strong> Standardized error handling and messaging integrations resulted in a 20-30% reduction in production issues.</li>
+      <li><strong>Smooth Transition:</strong> The adapter’s support for both legacy and modern systems enabled a seamless migration that aligned with the organization’s strategic shift toward event-driven architectures.</li>
+      <li><strong>Enhanced Collaboration:</strong> Comprehensive documentation and proactive training sessions fostered cross-team collaboration and increased overall project transparency.</li>
+      <li><strong>Scalability &amp; Future-Proofing:</strong> The modular design ensures the adapter can adapt to future technology changes without requiring a complete overhaul.</li>
+    </ul>
+    <p>
+      Reflecting on the project, I’m proud of how a thorough research phase, iterative design, and collaborative development resulted in a solution that not only addressed immediate challenges but also laid a strong foundation for future enhancements.
+    </p>
+  </section>
+
+  <footer class="case-study-footer">
+    <a href="/projects" class="back-link">← Back to Projects</a>
+  </footer>
+</div>
