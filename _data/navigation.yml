@@ -8,6 +8,10 @@ main:
   #   url: /year-archive/
   # - title: "Sample Collections"
   #   url: /collection-archive/
+
+  - title: "My Projects"
+    url: "/projects/"
+
   - title: "My LinkedIn"
     url: "https://www.linkedin.com/in/burt-leung-75206969"
     icon: "fab fa-linkedin"
