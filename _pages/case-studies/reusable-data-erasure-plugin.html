@@ -4,6 +4,12 @@ title: "Reusable Data Erasure Adapter"
 permalink: /projects/case-studies/reusable-data-erasure-plugin/
 ---
 
+<!-- Load Mermaid.js for dynamic diagram rendering -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>
+
 <div class="case-study-container">
   <header class="case-study-header">
     <p class="case-study-summary">A reusable plugin designed to streamline cross-team integrations for data erasure requests.</p>
@@ -20,10 +26,6 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
     <p>
       Throughout the project, I conducted extensive research and hands-on testing—drawing insights from detailed technical notes, internal discussions, and collaborative knowledge transfer sessions—to ensure that every design decision was aligned with our goal of reducing development time and minimizing production issues. The final solution not only cut down integration time by nearly half but also set a new standard for cross-team collaboration and system scalability.
     </p>
-
-
-
-
 
     <h2>2. Problem Statement</h2>
     <p>
@@ -53,10 +55,6 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       In summary, by consolidating common integration patterns into one cohesive solution, the unified adapter addressed immediate challenges and provided a future-proof foundation that is both scalable and adaptable to evolving technology needs. This approach has the potential to save considerable engineering time and reduce overall costs—benefits that become increasingly significant as more teams adopt the solution.
     </p>
 
-
-
-
-
     <h2>4. Technical Implementation</h2>
     <p>
       The technical implementation of this reusable adapter involved blending several key technologies—Spring Boot, Maven plugins, Apache Camel, and Apache Kafka (with Confluent’s Schema Registry)—to provide a plug-and-play experience for any team needing to process GDPR erasure requests. Below is a closer look at how each component fit into the bigger picture:
@@ -66,31 +64,24 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       <li><strong>Spring Boot &amp; Maven Plugin Architecture:</strong>
         I packaged the core integration logic (e.g., web service endpoints, error handling routines, messaging configurations) into a Spring Boot configuration and exposed it as a Maven plugin. This allowed teams to simply include the plugin in their <code>pom.xml</code> and implement a minimal interface (<code>DataErasureAdapter</code>) for their own business logic. By leveraging Spring Boot’s auto-configuration, the adapter automatically wires up the necessary components—such as Kafka producers and consumers—without requiring users to dive into low-level configurations.
       </li>
-
       <li><strong>Dual Messaging Support &amp; Backward Compatibility:</strong>
         A critical requirement was to ensure that existing teams using IBM MQ would not be forced into an immediate migration. To achieve backward compatibility, I created parallel sets of DTO classes (e.g., <code>CROErasureRequest</code>, <code>CROErasureResponse</code>) and interfaces (e.g., <code>CustomerDataEraser</code>) under new packages. This design enabled older IBM MQ–based adapters to continue operating as usual while new adapters could opt into the Kafka-based solution. Over time, teams can seamlessly transition from IBM MQ to Kafka with minimal disruption.
       </li>
-
       <li><strong>Kafka Integration &amp; Avro Schemas:</strong>
         Since Kafka was the strategic direction for event streaming, I incorporated Avro schemas (managed by Confluent’s Schema Registry) to enforce strong typing and versioning. The plugin automates schema retrieval and generation of Java classes via the Confluent registry, ensuring that each adapter application can easily serialize and deserialize messages. This approach removes much of the complexity for teams, who would otherwise need to manually configure Avro schemas and handle potential version mismatches.
       </li>
-
       <li><strong>Consumer Groups &amp; Environment Isolation:</strong>
         To prevent collisions between different environments (e.g., dev, test, QA, prod), the plugin dynamically generates Kafka consumer group IDs by combining each application’s <code>spring.application.name</code> with its environment. This ensures that requests in one environment do not accidentally get processed by consumers in another, providing a clear separation of traffic.
       </li>
-
       <li><strong>Apache Camel for Asynchronous Processing:</strong>
         Apache Camel routes form the backbone of the asynchronous flow, orchestrating how erasure requests are published to Kafka topics, consumed by adapter applications, and how responses flow back to the main system. Camel’s <code>jmsTemplate</code> and route builders simplify the creation of message endpoints, enabling consistent handling of statuses (<code>PENDING</code>, <code>COMPLETE</code>, <code>FAILED</code>) across both IBM MQ and Kafka–based adapters.
       </li>
-
       <li><strong>Deserialization &amp; Error Handling:</strong>
         Because message schemas can evolve, robust error handling was crucial. The adapter plugin includes configurable deserialization error handlers to gracefully handle schema mismatches or malformed messages. This design helps prevent production incidents by catching issues early and offering fallback or retry mechanisms.
       </li>
-
       <li><strong>Idempotent Producers &amp; Response Verification:</strong>
         To avoid duplicate processing, Kafka producers can be configured for idempotence. On the consumer side, the solution verifies that each received response actually comes from a registered adapter. If a response cannot be matched to a known adapter, it is flagged and discarded—ensuring data integrity and preventing unauthorized or “orphaned” messages from interfering with the workflow.
       </li>
-
       <li><strong>Extensive Documentation &amp; Hands-On Training:</strong>
         I prepared thorough documentation (including setup guides, best practices, and troubleshooting checklists) and led workshops to walk teams through the onboarding process. This combination of written resources and live knowledge transfer drastically reduced the learning curve for teams new to Kafka or the adapter’s architectural patterns.
       </li>
@@ -114,7 +105,66 @@ public interface DataErasureAdapter {
       Overall, this technical foundation—Spring Boot auto-configuration, Maven plugin encapsulation, Avro-based Kafka messaging, and Apache Camel routes—created a streamlined, flexible framework. It minimized repetitive coding tasks, ensured consistent standards across adapters, and laid the groundwork for a smooth transition from IBM MQ to Kafka, ultimately reducing development time, cutting costs, and elevating the reliability of GDPR erasure processing across the organization.
     </p>
 
+    <h3>4.1 Sequence Diagram – Dual Paths (Legacy MQ &amp; Kafka)</h3>
+    <div class="mermaid" style="max-width: 100%; margin-bottom: 2em;">
+      sequenceDiagram
+      participant DataWarehouse as Data Warehouse / Analytics
+      participant Orchestrator as Data Erasure Orchestrator
+      participant LegacyMQ as Legacy MQ Queue(s)
+      participant KafkaReq as Kafka Topic: data-erasure-requests
+      participant AdapterA as Adapter A (MQ)
+      participant AdapterB as Adapter B (Kafka)
+      participant KafkaRes as Kafka Topic: data-erasure-responses
 
+      Note over DataWarehouse: (1) Sends Erasure Request
+      DataWarehouse->>Orchestrator: REST call or direct MQ enqueue
+
+      alt Legacy MQ Path
+        Orchestrator->>LegacyMQ: Place message on &lt;adapter-specific&gt; queue
+        LegacyMQ->>AdapterA: Adapter A receives request
+        Note over AdapterA: Uses older MQ-based classes
+        AdapterA->>LegacyMQ: Send Erasure Response
+        LegacyMQ->>Orchestrator: Orchestrator picks up response
+      end
+
+      alt Kafka Path
+        Orchestrator->>KafkaReq: Publish Erasure Request (Avro)
+        Note over KafkaReq: Single shared "requests" topic
+        KafkaReq->>AdapterB: (2) Adapter B’s Consumer
+        Note over AdapterB: Uses plugin + &lt;DataEraser&gt; logic
+        AdapterB->>KafkaRes: Publish Erasure Response (Avro)
+        Note over KafkaRes: Single shared "responses" topic
+        KafkaRes->>Orchestrator: (3) Orchestrator consumes & updates status
+      end
+
+      Note over Orchestrator: (4) Orchestrator finalizes<br>request as COMPLETE or FAILED
+      Orchestrator->>DataWarehouse: (Optional) notify final status
+    </div>
+
+    <h3>4.2 Flowchart – Reusable Data Erasure Plugin</h3>
+    <div class="mermaid" style="max-width: 100%; margin-bottom: 2em;">
+      flowchart LR
+      subgraph Orchestrator
+        O_Req["Publish Erasure Request - Avro to data-erasure-requests"]
+        O_Res["Consume Erasure Responses - data-erasure-responses"]
+      end
+
+      O_Req -->|"Avro Schema Registry"| KafkaReq["Kafka Topic - data-erasure-requests"]
+
+      subgraph ReusablePlugin
+        PluginConfig["DataErasurePluginConfiguration - Consumer + Producer Beans"]
+        ReqConsumer["RequestConsumer - auto-configured"]
+        DataEraser["DataEraser - Business Logic"]
+        ResProducer["ResponseProducer - auto-configured"]
+      end
+
+      KafkaReq -->|"Consumer Group ID = appName + env"| ReqConsumer
+      ReqConsumer --> DataEraser
+      DataEraser --> ResProducer
+      ResProducer -->|"Avro Schema Registry"| KafkaRes["Kafka Topic - data-erasure-responses"]
+      KafkaRes -->|"Check recognized adapter ID"| O_Res
+      O_Res -->|"Update overall status - COMPLETE/FAILED"| Orchestrator
+    </div>
 
     <h2>5. Results &amp; Impact</h2>
     <p>
@@ -143,9 +193,6 @@ public interface DataErasureAdapter {
     <p>
       Looking back, I’m particularly proud of how this solution tackled a range of issues—fragmented development practices, time-consuming custom builds, and inconsistent quality—through a unified, reusable platform. By dramatically reducing the learning curve and engineering overhead for new adapters, we established a more resilient, cost-effective ecosystem for GDPR data erasure. As more teams adopt this approach, the cumulative savings in time and resources will only grow, creating a sustainable model that drives continuous innovation.
     </p>
-
-
-
   </section>
 
   <footer class="case-study-footer">
