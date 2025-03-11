@@ -2,27 +2,36 @@
   version="1.1"
   id="Layer_1"
   xmlns="http://www.w3.org/2000/svg"
-  width="200"
-  height="200"
-  viewBox="0 0 200 200"
+  width="300"
+  height="300"
+  viewBox="0 0 220 220"
 >
-  <!-- Gear Outline -->
-  <circle cx="100" cy="100" r="60" fill="#FEE2D5" />
+  <!-- Outer gear ring (with stroke) -->
+  <circle
+    cx="110"
+    cy="110"
+    r="65"
+    fill="#FEE2D5"
+    stroke="#F46036"
+    stroke-width="4"
+  />
 
-  <!-- Outer gear "teeth" -->
+  <!-- Gear "teeth" (bigger) -->
   <g fill="#F46036">
-    <rect x="95" y="25" width="10" height="15" />
-    <rect x="95" y="160" width="10" height="15" />
-    <rect x="160" y="95" width="15" height="10" />
-    <rect x="25"  y="95" width="15" height="10" />
-    <rect x="140" y="45" width="10" height="15" transform="rotate(45 145 52.5)" />
-    <rect x="45"  y="140" width="10" height="15" transform="rotate(45 50 147.5)" />
-    <rect x="45"  y="45"  width="10" height="15" transform="rotate(-45 50 52.5)" />
-    <rect x="140" y="140" width="10" height="15" transform="rotate(-45 145 147.5)" />
+    <!-- Adjusted positions for 220x220 viewBox (center is 110,110) -->
+    <rect x="105" y="20"  width="12" height="20" />
+    <rect x="105" y="180" width="12" height="20" />
+    <rect x="180" y="105" width="20" height="12" />
+    <rect x="20"  y="105" width="20" height="12" />
+    <!-- Diagonal teeth -->
+    <rect x="150" y="50" width="12" height="20" transform="rotate(45 156 60)" />
+    <rect x="50"  y="150" width="12" height="20" transform="rotate(45 56 160)" />
+    <rect x="50"  y="50"  width="12" height="20" transform="rotate(-45 56 60)" />
+    <rect x="150" y="150" width="12" height="20" transform="rotate(-45 156 160)" />
   </g>
 
-  <!-- Inner circle (larger) -->
-  <circle cx="100" cy="100" r="50" fill="#ED6A5A" />
+  <!-- Inner circle (slightly smaller so outer ring is more visible) -->
+  <circle cx="110" cy="110" r="45" fill="#ED6A5A" />
 
   <!-- "BL" Text -->
   <text
