@@ -34,6 +34,8 @@ enable_copy_code_button  : # true, false (default)
 copyright                : # "copyright" name, defaults to site.title
 copyright_url            : # "copyright" URL, defaults to site.url
 
+font_awesome: true
+
 header:
   overlay_image: "/assets/images/background.png"
   overlay_filter: 0.3  # Adjust transparency if needed
