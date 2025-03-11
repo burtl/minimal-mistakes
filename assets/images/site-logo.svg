@@ -1,0 +1,40 @@
+<svg
+  version="1.1"
+  id="Layer_1"
+  xmlns="http://www.w3.org/2000/svg"
+  width="200"
+  height="200"
+  viewBox="0 0 200 200"
+>
+  <!-- Gear Outline -->
+  <circle cx="100" cy="100" r="60" fill="#FEE2D5" />
+
+  <!-- Outer gear "teeth" -->
+  <g fill="#F46036">
+    <rect x="95" y="25" width="10" height="15" />
+    <rect x="95" y="160" width="10" height="15" />
+    <rect x="160" y="95" width="15" height="10" />
+    <rect x="25"  y="95" width="15" height="10" />
+    <rect x="140" y="45" width="10" height="15" transform="rotate(45 145 52.5)" />
+    <rect x="45"  y="140" width="10" height="15" transform="rotate(45 50 147.5)" />
+    <rect x="45"  y="45"  width="10" height="15" transform="rotate(-45 50 52.5)" />
+    <rect x="140" y="140" width="10" height="15" transform="rotate(-45 145 147.5)" />
+  </g>
+
+  <!-- Inner circle (larger) -->
+  <circle cx="100" cy="100" r="50" fill="#ED6A5A" />
+
+  <!-- "BL" Text -->
+  <text
+    x="50%"
+    y="50%"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    fill="#FFFFFF"
+    font-family="Helvetica, Arial, sans-serif"
+    font-size="54"
+    font-weight="bold"
+  >
+    BL
+  </text>
+</svg>
