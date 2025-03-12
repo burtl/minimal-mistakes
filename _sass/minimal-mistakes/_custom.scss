@@ -170,9 +170,23 @@ nav a:last-child {
 /* Thumbnails that trigger the modal */
 .diagram-thumbnail {
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  /* Add a border and subtle shadow */
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  /* Optional padding so the border doesn't sit flush against the diagram */
+  padding: 0.5rem;
+
+  /* Transition for smooth hover effects */
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
 
   &:hover {
-    transform: scale(1.05);
+    /* Slightly enlarge and darken the shadow */
+    transform: scale(1.06);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
   }
 }
