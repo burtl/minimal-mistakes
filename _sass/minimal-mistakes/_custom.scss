@@ -80,6 +80,31 @@ nav a:last-child {
 }
 
 /* ==========================================================================
+   For code blocks
+   ========================================================================== */
+pre {
+  background-color: #fff; /* Light background */
+  border: 1px solid #bbb; /* Subtle border */
+  border-radius: 6px; /* Slightly rounded corners */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Soft shadow */
+  padding: 1rem; /* Padding to make it readable */
+  overflow-x: auto; /* Enable horizontal scrolling for overflow */
+  white-space: pre-wrap; /* Allows code to wrap naturally */
+  word-wrap: break-word; /* Ensures long lines wrap properly */
+  font-family: "Courier New", monospace; /* Classic coding font */
+  font-size: 14px; /* Readable font size */
+  line-height: 1.5; /* Spacing between lines */
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Hover effect to make the code block stand out */
+pre:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Darker shadow on hover */
+  transform: scale(1.02); /* Slight enlargement effect */
+}
+
+
+/* ==========================================================================
    Diagram Modal Base Styles
    ========================================================================== */
 
