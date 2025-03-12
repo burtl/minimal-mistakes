@@ -94,12 +94,12 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
     <p>
       Below is an example snippet showcasing the core interface that teams implement to plug their business logic into the adapter:
     </p>
-    <pre><code>
-// Example snippet of the adapter's plug-and-play interface
-public interface DataErasureAdapter {
-    void processErasureRequest(ErasureRequest request);
-}
-</code></pre>
+    <pre><code class="language-java">
+    // Example snippet of the adapter's plug-and-play interface
+    public interface DataErasureAdapter {
+        void processErasureRequest(ErasureRequest request);
+    }
+    </code></pre>
 
     <p>
       Beyond the coding aspects, I conducted manual testing to validate both the Kafka-based and IBM MQ–based paths. This included running the main application and a sample adapter application locally, publishing erasure requests to Kafka, verifying the messages reached the correct topic, ensuring the consumer handled them appropriately, and confirming that the response was successfully sent back. Throughout this process, tools like Grafana, log monitoring, and Confluence-based documentation helped track performance and detect issues early.
