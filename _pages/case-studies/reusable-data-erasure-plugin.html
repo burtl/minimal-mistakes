@@ -91,15 +91,27 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       </li>
     </ul>
 
+
+
+    <!-- New subheading for the code snippet -->
+    <h3>4.1 Minimal “Plug-and-Play” Interface</h3>
     <p>
-      Below is an example snippet showcasing the core interface that teams implement to plug their business logic into the adapter:
+      Previously, teams had to manually configure Kafka topics, IBM MQ queues, error handling, and even their own default web services for both testing and production.
+      Now, all of that boilerplate is abstracted away into the reusable plugin.
+      Once teams add the plugin as a dependency, the only remaining task is to implement this simple interface:
     </p>
+
     <pre><code class="language-java">
-    // Example snippet of the adapter's plug-and-play interface
+    // The adapter's minimal "plug-and-play" interface
     public interface DataErasureAdapter {
         void processErasureRequest(ErasureRequest request);
     }
     </code></pre>
+
+    <br><!-- Blank line to visually separate the snippet from the next paragraph -->
+
+
+
 
     <p>
       Beyond the coding aspects, I conducted manual testing to validate both the Kafka-based and IBM MQ–based paths. This included running the main application and a sample adapter application locally, publishing erasure requests to Kafka, verifying the messages reached the correct topic, ensuring the consumer handled them appropriately, and confirming that the response was successfully sent back. Throughout this process, tools like Grafana, log monitoring, and Confluence-based documentation helped track performance and detect issues early.
@@ -109,7 +121,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       Overall, this technical foundation—Spring Boot auto-configuration, Maven plugin encapsulation, Avro-based Kafka messaging, and Apache Camel routes—created a streamlined, flexible framework. It minimized repetitive coding tasks, ensured consistent standards across adapters, and laid the groundwork for a smooth transition from IBM MQ to Kafka, ultimately reducing development time, cutting costs, and elevating the reliability of GDPR erasure processing across the organization.
     </p>
 
-    <h3>4.1 Sequence Diagram – Dual Paths (Legacy MQ & Kafka)</h3>
+    <h3>4.2 Sequence Diagram – Dual Paths (Legacy MQ & Kafka)</h3>
     <div class="diagram-thumbnail" onclick="openModal('sequenceDiagramModal', 'sequenceDiagramFull')">
       <div class="mermaid" id="sequenceDiagram">
         sequenceDiagram
@@ -163,7 +175,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       </div>
     </div>
 
-    <h3>4.2 Flowchart – Reusable Data Erasure Plugin</h3>
+    <h3>4.3 Flowchart – Reusable Data Erasure Plugin</h3>
     <div class="diagram-thumbnail" onclick="openModal('flowchartModal', 'flowchartFull')">
       <div class="mermaid" id="flowchart">
         flowchart LR
