@@ -81,28 +81,31 @@ nav a:last-child {
 
 
 
+
+// ======================================================================================================
+// CSS styles for the diagram modals in reusable-data-erasure-plugin.html.
+// ======================================================================================================
+
 .diagram-modal {
+  /* Fill the entire viewport so there’s no margin on left/right */
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 
-  /* Instead of forcing 90vh, let’s do a max-height so it only grows as needed */
-  width: 90vw;
-  max-width: 1200px;
-  max-height: 90vh;
-
+  /* Dark translucent background overlay */
   background-color: rgba(0, 0, 0, 0.8);
+
+  /* Stacking above everything */
   z-index: 9999;
-  border-radius: 8px;
 
-  /* Remove overflow: hidden so the child can scroll. */
-  overflow: visible;
-
-  /* Hidden/visible toggling for show/hide */
+  /* Start hidden */
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+
+  /* Fade-in/out transition */
+  transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
 }
 
 .diagram-modal.show {
@@ -111,38 +114,41 @@ nav a:last-child {
 }
 
 .diagram-modal-content {
-  /* A bit of spacing inside the modal */
-  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  /* White background for the diagram area */
+  width: 95vw;
+  height: 90vh;
+
+  margin: auto;
   background: #fff;
   border-radius: 8px;
-  padding: 1em;
-
-  /* If the content is taller than 90vh, scrollbars will appear */
-  max-height: calc(90vh - 40px); /* subtract margin to avoid overflow off-screen */
   overflow: auto;
-  position: relative; /* for the close button positioning */
+  position: relative;
 }
 
-/* Force the Mermaid diagram to be somewhat large, but not *too* huge. */
+/* Force a bigger diagram if you like, but let it scroll if it overflows. */
 .diagram-modal-content .mermaid svg {
-  width: 1200px; /* or 1000px, 1400px—whatever you prefer */
+  width: 1600px; /* or 1200px, or auto if you want it to just fill the container */
   max-width: none !important;
   height: auto;
   display: block;
 }
+/* The special flowchart-modal overrides. */
+.flowchart-modal .diagram-modal-content .mermaid svg {
+  /* Maybe narrower, more horizontal dimension if you want it shorter. */
+  width: 1000px;
+  /* or width: 1200px, or auto, etc. */
+}
 
-/* The close “X” */
+/* Close button in the top-right corner of the white content box */
 .close {
   position: absolute;
   top: 10px;
   right: 15px;
   font-size: 24px;
   cursor: pointer;
-
-  /* If the background behind the X is white, use a dark color;
-     if you want the X on the black overlay, use white (#fff). */
   color: #333;
 }
 
@@ -150,7 +156,6 @@ nav a:last-child {
   color: #555;
 }
 
-/* For the thumbnail hover effect */
 .diagram-thumbnail {
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
