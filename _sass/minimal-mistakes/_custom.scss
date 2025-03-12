@@ -123,9 +123,8 @@ nav a:last-child {
   box-sizing: border-box;
 }
 
-/* Default: big diagrams, e.g. for the sequence diagram */
 .diagram-modal-content .mermaid svg {
-  width: 1600px;
+  width: 1800px;
   height: auto;
   max-width: none !important;
   display: block;
@@ -145,7 +144,7 @@ nav a:last-child {
 }
 
 .flowchart-modal .diagram-modal-content .mermaid svg {
-  width: 1000px; /* narrower than the sequence diagram’s 1600px */
+  width: 2500px; /* increased from 1000px */
   max-width: none !important;
   height: auto;
 }
