@@ -6,34 +6,38 @@
   height="300"
   viewBox="0 0 220 220"
 >
-  <!-- Outer gear ring (with stroke) -->
+  <!-- Outer gear ring (thicker stroke) -->
   <circle
     cx="110"
     cy="110"
     r="65"
     fill="#FEE2D5"
     stroke="#F46036"
-    stroke-width="4"
+    stroke-width="12"
   />
 
-  <!-- Gear "teeth" (bigger) -->
+  <!-- Gear "teeth" -->
   <g fill="#F46036">
-    <!-- Adjusted positions for 220x220 viewBox (center is 110,110) -->
-    <rect x="105" y="20"  width="12" height="20" />
-    <rect x="105" y="180" width="12" height="20" />
-    <rect x="180" y="105" width="20" height="12" />
-    <rect x="20"  y="105" width="20" height="12" />
+    <!-- Top -->
+    <rect x="105" y="15"  width="16" height="24" />
+    <!-- Bottom -->
+    <rect x="105" y="181" width="16" height="24" />
+    <!-- Right -->
+    <rect x="181" y="105" width="24" height="16" />
+    <!-- Left -->
+    <rect x="15"  y="105" width="24" height="16" />
+
     <!-- Diagonal teeth -->
-    <rect x="150" y="50" width="12" height="20" transform="rotate(45 156 60)" />
-    <rect x="50"  y="150" width="12" height="20" transform="rotate(45 56 160)" />
-    <rect x="50"  y="50"  width="12" height="20" transform="rotate(-45 56 60)" />
-    <rect x="150" y="150" width="12" height="20" transform="rotate(-45 156 160)" />
+    <rect x="148" y="48"  width="16" height="24" transform="rotate(45 156 60)" />
+    <rect x="48"  y="148" width="16" height="24" transform="rotate(45 56 160)" />
+    <rect x="48"  y="48"  width="16" height="24" transform="rotate(-45 56 60)" />
+    <rect x="148" y="148" width="16" height="24" transform="rotate(-45 156 160)" />
   </g>
 
-  <!-- Inner circle (slightly smaller so outer ring is more visible) -->
+  <!-- Inner circle (increased radius) -->
   <circle cx="110" cy="110" r="45" fill="#ED6A5A" />
 
-  <!-- "BL" Text -->
+  <!-- "BL" text (reduced font size) -->
   <text
     x="50%"
     y="50%"
@@ -41,7 +45,7 @@
     text-anchor="middle"
     fill="#FFFFFF"
     font-family="Helvetica, Arial, sans-serif"
-    font-size="54"
+    font-size="48"
     font-weight="bold"
   >
     BL
