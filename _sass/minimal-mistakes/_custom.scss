@@ -82,29 +82,19 @@ nav a:last-child {
 
 
 
-// ======================================================================================================
-// CSS styles for the diagram modals in reusable-data-erasure-plugin.html.
-// ======================================================================================================
+/* ==========================================================================
+   Diagram Modal Base Styles
+   ========================================================================== */
 
 .diagram-modal {
-  /* Fill the entire viewport so there’s no margin on left/right */
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  /* Dark translucent background overlay */
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; */
   background-color: rgba(0, 0, 0, 0.8);
-
-  /* Stacking above everything */
   z-index: 9999;
 
-  /* Start hidden */
+  /* Start hidden; fade in/out */
   visibility: hidden;
   opacity: 0;
-
-  /* Fade-in/out transition */
   transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
 }
 
@@ -113,44 +103,54 @@ nav a:last-child {
   opacity: 1;
 }
 
+/*
+  .diagram-modal-content is the white “box” in the center.
+  Use absolute centering so it can scroll if needed.
+*/
 .diagram-modal-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  width: 95vw;    /* Default for modals (e.g. sequence diagram) */
-  height: 90vh;
-
-  margin: auto;
+  /* Constrain its size so we can scroll if content is too large */
+  max-width: 90vw;
+  max-height: 90vh;
   background: #fff;
   border-radius: 8px;
   overflow: auto;
-  position: relative;
+  padding: 1rem; /* optional, so the diagram isn't flush against the edges */
+  box-sizing: border-box;
 }
 
-/* Default Mermaid diagrams in the modal (sequence, etc.) */
+/* Default: big diagrams, e.g. for the sequence diagram */
 .diagram-modal-content .mermaid svg {
-  width: 1600px;               /* Large default width */
-  max-width: none !important;
+  width: 1600px;
   height: auto;
+  max-width: none !important;
   display: block;
 }
 
-/* For flowchart modal specifically, override container and diagram widths */
+/* ==========================================================================
+   FLOWCHART MODAL OVERRIDES
+   ========================================================================== */
 .flowchart-modal .diagram-modal-content {
-  width: auto;         /* Let it shrink to fit the narrower flowchart */
-  max-width: 1200px;   /* Prevent it from exceeding 1200px if you want a limit */
-  height: auto;        /* If you prefer the container not to stretch vertically */
-  max-height: 90vh;    /* But still avoid overflowing the viewport */
+  /*
+    If you want the flowchart container narrower, you can do e.g.:
+    max-width: 1200px;
+    or even an explicit width: 1000px;
+    but only do that if you truly want to override the base 90vw logic.
+  */
+  max-width: 1200px; /* or remove if you prefer purely 90vw logic */
 }
 
 .flowchart-modal .diagram-modal-content .mermaid svg {
-  width: 1000px;       /* Narrower flowchart width than sequence diagram */
+  width: 1000px; /* narrower than the sequence diagram’s 1600px */
   max-width: none !important;
   height: auto;
 }
 
-/* Close button in the top-right corner of the white content box */
+/* Close “X” in top-right corner of the white content box */
 .close {
   position: absolute;
   top: 10px;
@@ -158,17 +158,18 @@ nav a:last-child {
   font-size: 24px;
   cursor: pointer;
   color: #333;
+
+  &:hover {
+    color: #555;
+  }
 }
 
-.close:hover {
-  color: #555;
-}
-
+/* Thumbnails that trigger the modal */
 .diagram-thumbnail {
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
-}
 
-.diagram-thumbnail:hover {
-  transform: scale(1.05);
+  &:hover {
+    transform: scale(1.05);
+  }
 }
