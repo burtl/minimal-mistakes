@@ -149,15 +149,15 @@ public interface DataErasureAdapter {
 
     <!-- Diagram Modal for Sequence Diagram -->
     <div id="sequenceDiagramModal" class="diagram-modal">
+      <!-- The close "X" button -->
+      <span
+        class="close"
+        onclick="closeModal('sequenceDiagramModal')"
+        aria-label="Close modal"
+      >
+        &times;
+      </span>
       <div class="diagram-modal-content">
-        <!-- The close "X" button -->
-        <span
-          class="close"
-          onclick="closeModal('sequenceDiagramModal')"
-          aria-label="Close modal"
-        >
-          &times;
-        </span>
 
         <div class="mermaid" id="sequenceDiagramFull"></div>
       </div>
@@ -192,8 +192,8 @@ public interface DataErasureAdapter {
 
     <!-- Diagram Modal for Flowchart -->
     <div id="flowchartModal" class="diagram-modal flowchart-modal">
+      <span class="close" onclick="closeModal('flowchartModal')">&times;</span>
       <div class="diagram-modal-content">
-        <span class="close" onclick="closeModal('flowchartModal')">&times;</span>
         <div class="mermaid" id="flowchartFull"></div>
       </div>
     </div>

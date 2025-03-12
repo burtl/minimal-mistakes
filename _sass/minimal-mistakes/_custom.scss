@@ -78,24 +78,38 @@ nav a:last-child {
   }
 }
 
-
-
-
-
 /* ==========================================================================
    Diagram Modal Base Styles
    ========================================================================== */
 
 .diagram-modal {
   position: fixed;
-  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; */
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 9999;
+  z-index: 9999; /* The overlay is above everything else */
 
   /* Start hidden; fade in/out */
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+
+  /*
+    Close "X" pinned in the top-right corner of the entire overlay,
+    so it doesn't move when content is scrolled.
+  */
+  .close {
+    position: absolute; /* pinned to .diagram-modal, not the scrollable box */
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;  /* White for visibility on dark background */
+    z-index: 999999; /* Ensure it's on top of the content box */
+
+    &:hover {
+      color: #ccc;
+    }
+  }
 }
 
 .diagram-modal.show {
@@ -105,10 +119,12 @@ nav a:last-child {
 
 /*
   .diagram-modal-content is the white “box” in the center.
-  Use absolute centering so it can scroll if needed.
+  We give it a slightly lower z-index so the .close button
+  remains on top.
 */
 .diagram-modal-content {
-  position: absolute;
+  position: absolute; /* helps center it with transform */
+  z-index: 99998; /* slightly below the .close button’s z-index */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -123,6 +139,7 @@ nav a:last-child {
   box-sizing: border-box;
 }
 
+/* Default Mermaid diagram in the modal */
 .diagram-modal-content .mermaid svg {
   width: 1800px;
   height: auto;
@@ -147,20 +164,6 @@ nav a:last-child {
   width: 2500px; /* increased from 1000px */
   max-width: none !important;
   height: auto;
-}
-
-/* Close “X” in top-right corner of the white content box */
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-  color: #333;
-
-  &:hover {
-    color: #555;
-  }
 }
 
 /* Thumbnails that trigger the modal */
