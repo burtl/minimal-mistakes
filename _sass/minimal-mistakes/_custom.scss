@@ -118,7 +118,7 @@ nav a:last-child {
   justify-content: center;
   align-items: center;
 
-  width: 95vw;
+  width: 95vw;    /* Default for modals (e.g. sequence diagram) */
   height: 90vh;
 
   margin: auto;
@@ -128,18 +128,26 @@ nav a:last-child {
   position: relative;
 }
 
-/* Force a bigger diagram if you like, but let it scroll if it overflows. */
+/* Default Mermaid diagrams in the modal (sequence, etc.) */
 .diagram-modal-content .mermaid svg {
-  width: 1600px; /* or 1200px, or auto if you want it to just fill the container */
+  width: 1600px;               /* Large default width */
   max-width: none !important;
   height: auto;
   display: block;
 }
-/* The special flowchart-modal overrides. */
+
+/* For flowchart modal specifically, override container and diagram widths */
+.flowchart-modal .diagram-modal-content {
+  width: auto;         /* Let it shrink to fit the narrower flowchart */
+  max-width: 1200px;   /* Prevent it from exceeding 1200px if you want a limit */
+  height: auto;        /* If you prefer the container not to stretch vertically */
+  max-height: 90vh;    /* But still avoid overflowing the viewport */
+}
+
 .flowchart-modal .diagram-modal-content .mermaid svg {
-  /* Maybe narrower, more horizontal dimension if you want it shorter. */
-  width: 1000px;
-  /* or width: 1200px, or auto, etc. */
+  width: 1000px;       /* Narrower flowchart width than sequence diagram */
+  max-width: none !important;
+  height: auto;
 }
 
 /* Close button in the top-right corner of the white content box */
