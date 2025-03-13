@@ -19,8 +19,40 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
     <p class="case-study-summary">A reusable plugin designed to streamline cross-team integrations for data erasure requests.</p>
   </header>
 
+
+  <!-- Outline Navigation -->
+  <nav class="case-study-outline">
+    <h2>Outline</h2>
+    <ul>
+      <li><a href="#overview">1. Overview</a></li>
+      <li>
+        <a href="#problem-statement">2. Problem Statement</a>
+        <ul>
+          <li><a href="#data-flow-comparison">2.1 Data Flow Comparison Before and After</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#solution">3. Solution & Alternative Approaches</a>
+        <ul>
+          <li><a href="#integration-flow">3.1 Integration Flow — How Services Use the Plugin</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#technical-implementation">4. Technical Implementation</a>
+        <ul>
+          <li><a href="#minimal-interface">4.1 Minimal “Plug-and-Play” Interface</a></li>
+          <li><a href="#sequence-diagram">4.2 Sequence Diagram – Dual Paths</a></li>
+          <li><a href="#flowchart">4.3 Flowchart – Reusable Data Erasure Plugin</a></li>
+          <li><a href="#component-diagram">4.4 Component Diagram – Plugin Architecture</a></li>
+        </ul>
+      </li>
+      <li><a href="#results-impact">5. Results & Impact</a></li>
+    </ul>
+  </nav>
+
+
   <section class="case-study-content">
-    <h2>1. Overview</h2>
+    <h2 id="overview">1. Overview</h2>
     <p>
       In this case study, I share my journey in developing a reusable data erasure adapter at my previous organization—a robust solution designed to simplify and standardize the integration of GDPR data erasure requests across multiple teams. Early on, I identified that each team was independently reinventing the wheel by building their own adapters, which led to lengthy ramp-up times and inconsistent error handling. To address these challenges, I set out to create a single, unified, plug‐and‐play solution that would not only streamline the integration process but also ensure high reliability and maintainability.
     </p>
@@ -31,7 +63,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       Throughout the project, I conducted extensive research and hands-on testing—drawing insights from detailed technical notes, internal discussions, and collaborative knowledge transfer sessions—to ensure that every design decision was aligned with our goal of reducing development time and minimizing production issues. The final solution not only cut down integration time by nearly half but also set a new standard for cross-team collaboration and system scalability.
     </p>
 
-    <h2>2. Problem Statement</h2>
+    <h2 id="problem-statement">2. Problem Statement</h2>
     <p>
       Before this project, every team had to build and maintain its own adapter to handle customer data erasure requests. This decentralized approach meant that each team was reinventing the wheel—duplicating boilerplate code, independently managing integrations with different messaging systems (such as legacy IBM MQ and emerging Kafka platforms), and implementing their own error-handling routines. As a result, ramp-up times often extended to around six weeks per team, and inconsistent error handling became a recurring issue.
     </p>
@@ -40,7 +72,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
     </p>
 
 
-    <h3>2.1 Data Flow Comparison Before and After Implementing the Reusable Data Erasure Adapter</h3>
+    <h3 id="data-flow-comparison">2.1 Data Flow Comparison Before and After Implementing the Reusable Data Erasure Adapter</h3>
     <div class="diagram-thumbnail" onclick="openModal('dataFlowDiagramModal', 'dataFlowDiagramFull')">
       <div class="mermaid" id="dataFlow">
         flowchart LR
@@ -93,14 +125,14 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
 
 
 
-    <h2>3. Solution &amp; Alternative Approaches</h2>
+    <h2 id="solution">3. Solution &amp; Alternative Approaches</h2>
     <p>
       To tackle these challenges, I designed and implemented a unified, reusable adapter as a Spring Boot configuration packaged into a Maven plugin. This plug‐and‐play model enabled teams to simply add the dependency and implement a single Java interface for their specific business logic, abstracting away the intricate and repetitive integration tasks.
     </p>
 
 
 
-    <h3>3.1 Integration Flow — How Services Use the Plugin</h3>
+    <h3 id="integration-flow">3.1 Integration Flow — How Services Use the Plugin</h3>
     <div class="diagram-thumbnail" onclick="openModal('serviceIntegrationDiagramModal', 'serviceIntegrationDiagramFull')">
       <div class="mermaid" id="serviceIntegrationDiagram">
         sequenceDiagram
@@ -173,7 +205,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       In summary, by consolidating common integration patterns into one cohesive solution, the unified adapter addressed immediate challenges and provided a future-proof foundation that is both scalable and adaptable to evolving technology needs. This approach has the potential to save considerable engineering time and reduce overall costs—benefits that become increasingly significant as more teams adopt the solution.
     </p>
 
-    <h2>4. Technical Implementation</h2>
+    <h2 id="technical-implementation">4. Technical Implementation</h2>
     <p>
       The technical implementation of this reusable adapter involved blending several key technologies—Spring Boot, Maven plugins, Apache Camel, and Apache Kafka (with Confluent’s Schema Registry)—to provide a plug-and-play experience for any team needing to process GDPR erasure requests. Below is a closer look at how each component fit into the bigger picture:
     </p>
@@ -208,7 +240,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
 
 
     <!-- New subheading for the code snippet -->
-    <h3>4.1 Minimal “Plug-and-Play” Interface</h3>
+    <h3 id="minimal-interface">4.1 Minimal “Plug-and-Play” Interface</h3>
     <p>
       Previously, teams had to manually configure Kafka topics, IBM MQ queues, error handling, and even their own default web services for both testing and production.
       Now, all of that boilerplate is abstracted away into the reusable plugin.
@@ -235,7 +267,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       Overall, this technical foundation—Spring Boot auto-configuration, Maven plugin encapsulation, Avro-based Kafka messaging, and Apache Camel routes—created a streamlined, flexible framework. It minimized repetitive coding tasks, ensured consistent standards across adapters, and laid the groundwork for a smooth transition from IBM MQ to Kafka, ultimately reducing development time, cutting costs, and elevating the reliability of GDPR erasure processing across the organization.
     </p>
 
-    <h3>4.2 Sequence Diagram – Dual Paths (Legacy MQ & Kafka)</h3>
+    <h3 id="sequence-diagram">4.2 Sequence Diagram – Dual Paths (Legacy MQ & Kafka)</h3>
     <div class="diagram-thumbnail" onclick="openModal('sequenceDiagramModal', 'sequenceDiagramFull')">
       <div class="mermaid" id="sequenceDiagram">
         sequenceDiagram
@@ -289,7 +321,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       </div>
     </div>
 
-    <h3>4.3 Flowchart – Reusable Data Erasure Plugin</h3>
+    <h3 id="flowchart">4.3 Flowchart – Reusable Data Erasure Plugin</h3>
     <div class="diagram-thumbnail" onclick="openModal('flowchartModal', 'flowchartFull')">
       <div class="mermaid" id="flowchart">
         flowchart LR
@@ -327,7 +359,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
 
 
 
-    <h3>4.4 Component Diagram – Plugin Architecture</h3>
+    <h3 id="component-diagram">4.4 Component Diagram – Plugin Architecture</h3>
     <p>
       The Reusable Data Erasure Plugin is divided into several Spring Boot modules, each focusing on a
       specific responsibility in the data erasure workflow. By separating these concerns, teams
@@ -451,7 +483,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
 
     <!-- ====================================================================================================== -->
 
-    <h2>5. Results &amp; Impact</h2>
+    <h2 id="results-impact">5. Results &amp; Impact</h2>
     <p>
       The implementation of this reusable data erasure adapter produced far-reaching benefits, both immediate and long-term:
     </p>
