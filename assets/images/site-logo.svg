@@ -6,7 +6,7 @@
   height="300"
   viewBox="0 0 220 220"
 >
-  <!-- Outer gear ring (thicker stroke) -->
+  <!-- Outer gear ring -->
   <circle
     cx="110"
     cy="110"
@@ -16,38 +16,35 @@
     stroke-width="12"
   />
 
-  <!-- Gear "teeth" (spokes) -->
+  <!-- Gear "teeth" / spokes -->
   <g fill="#F46036">
-    <!-- Top: moved down so bottom edge touches circle -->
-    <rect x="105" y="21" width="16" height="24" />
+    <!-- Top: horizontally centered around x=110, bottom edge at y=45 -->
+    <rect x="102" y="21" width="16" height="24" />
 
-    <!-- Bottom: moved up so top edge touches circle -->
-    <rect x="105" y="175" width="16" height="24" />
+    <!-- Bottom: horizontally centered around x=110, top edge at y=175 -->
+    <rect x="102" y="175" width="16" height="24" />
 
-    <!-- Right: moved left so left edge touches circle -->
-    <rect x="175" y="105" width="24" height="16" />
+    <!-- Left: vertically centered around y=110, right edge at x=45 -->
+    <rect x="21" y="102" width="24" height="16" />
 
-    <!-- Left: moved right so right edge touches circle -->
-    <rect x="21"  y="105" width="24" height="16" />
+    <!-- Right: vertically centered around y=110, left edge at x=175 -->
+    <rect x="175" y="102" width="24" height="16" />
 
-    <!-- Diagonal teeth -->
-    <!-- Top-right: shifted outward so it’s no longer partially inside the circle -->
-    <rect x="152" y="44" width="16" height="24" transform="rotate(45 160 56)" />
-
-    <!-- Bottom-right: shifted outward similarly -->
-    <rect x="152" y="152" width="16" height="24" transform="rotate(-45 160 164)" />
-
-    <!-- Top-left: unchanged (already aligns well) -->
+    <!-- Diagonal teeth (unchanged, all equidistant from center) -->
+    <!-- Top-left -->
     <rect x="48"  y="48"  width="16" height="24" transform="rotate(-45 56 60)" />
-
-    <!-- Bottom-left: unchanged (already aligns well) -->
+    <!-- Bottom-left -->
     <rect x="48"  y="148" width="16" height="24" transform="rotate(45 56 160)" />
+    <!-- Top-right -->
+    <rect x="152" y="44"  width="16" height="24" transform="rotate(45 160 56)" />
+    <!-- Bottom-right -->
+    <rect x="152" y="152" width="16" height="24" transform="rotate(-45 160 164)" />
   </g>
 
   <!-- Inner circle -->
   <circle cx="110" cy="110" r="45" fill="#ED6A5A" />
 
-  <!-- "BL" text with stroke -->
+  <!-- "BL" text -->
   <text
     x="50%"
     y="50%"
