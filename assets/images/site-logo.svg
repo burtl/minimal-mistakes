@@ -44,6 +44,8 @@
     dominant-baseline="middle"
     text-anchor="middle"
     fill="#FFFFFF"
+    stroke="#333333"
+    stroke-width="1"
     font-family="Helvetica, Arial, sans-serif"
     font-size="48"
     font-weight="bold"
