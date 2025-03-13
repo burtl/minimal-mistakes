@@ -16,28 +16,38 @@
     stroke-width="12"
   />
 
-  <!-- Gear "teeth" -->
+  <!-- Gear "teeth" (spokes) -->
   <g fill="#F46036">
-    <!-- Top -->
-    <rect x="105" y="15"  width="16" height="24" />
-    <!-- Bottom -->
-    <rect x="105" y="181" width="16" height="24" />
-    <!-- Right -->
-    <rect x="181" y="105" width="24" height="16" />
-    <!-- Left -->
-    <rect x="15"  y="105" width="24" height="16" />
+    <!-- Top: moved down so bottom edge touches circle -->
+    <rect x="105" y="21" width="16" height="24" />
+
+    <!-- Bottom: moved up so top edge touches circle -->
+    <rect x="105" y="175" width="16" height="24" />
+
+    <!-- Right: moved left so left edge touches circle -->
+    <rect x="175" y="105" width="24" height="16" />
+
+    <!-- Left: moved right so right edge touches circle -->
+    <rect x="21"  y="105" width="24" height="16" />
 
     <!-- Diagonal teeth -->
-    <rect x="148" y="48"  width="16" height="24" transform="rotate(45 156 60)" />
-    <rect x="48"  y="148" width="16" height="24" transform="rotate(45 56 160)" />
+    <!-- Top-right: shifted outward so it’s no longer partially inside the circle -->
+    <rect x="152" y="44" width="16" height="24" transform="rotate(45 160 56)" />
+
+    <!-- Bottom-right: shifted outward similarly -->
+    <rect x="152" y="152" width="16" height="24" transform="rotate(-45 160 164)" />
+
+    <!-- Top-left: unchanged (already aligns well) -->
     <rect x="48"  y="48"  width="16" height="24" transform="rotate(-45 56 60)" />
-    <rect x="148" y="148" width="16" height="24" transform="rotate(-45 156 160)" />
+
+    <!-- Bottom-left: unchanged (already aligns well) -->
+    <rect x="48"  y="148" width="16" height="24" transform="rotate(45 56 160)" />
   </g>
 
-  <!-- Inner circle (increased radius) -->
+  <!-- Inner circle -->
   <circle cx="110" cy="110" r="45" fill="#ED6A5A" />
 
-  <!-- "BL" text (reduced font size) -->
+  <!-- "BL" text with stroke -->
   <text
     x="50%"
     y="50%"
