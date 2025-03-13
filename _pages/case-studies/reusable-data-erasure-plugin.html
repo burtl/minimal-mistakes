@@ -39,6 +39,60 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       Additionally, the lack of a unified solution led to fragmented practices and technical debt across the organization. Each team’s custom adapter not only increased maintenance overhead but also heightened the risk of production issues, as subtle differences in implementation could result in unexpected behavior. The growing volume of GDPR-related data erasure requests further stressed these ad-hoc solutions, making scalability and reliability pressing concerns. It was evident that a more unified, flexible approach was necessary—one that could support both legacy and contemporary technologies while ensuring consistency, reducing development time, and ultimately improving overall system stability.
     </p>
 
+
+    <h3>2.1 Data Flow Comparison Before and After Implementing the Reusable Data Erasure Adapter</h3>
+    <div class="diagram-thumbnail" onclick="openModal('dataFlowDiagramModal', 'dataFlowDiagramFull')">
+      <div class="mermaid" id="dataFlow">
+        flowchart LR
+          %% We define a left-to-right (LR) diagram,
+          %% with two subgraphs side-by-side.
+
+          subgraph "After (Reusable Plugin)"
+            direction TB
+
+            A1([All Teams]) --> A2{{Reusable Erasure Plugin}}
+            A2 --> A3[Single Centralized Erasure Service]
+            A3 --> A4([Unified Logging & Auditing])
+
+            noteA["• One-stop erasure logic<br/>• Consistent security & compliance<br/>• Simplified maintenance & oversight"]
+            noteA -.-> A2
+          end
+
+          subgraph "Before (Legacy Approach)"
+            direction TB
+
+            B1([Team A]) --> B2{{Separate Erasure Logic}}
+            B2 --> B3([System A Data])
+
+            B4([Team B]) --> B5{{Separate Erasure Logic}}
+            B5 --> B6([System B Data])
+
+            B7([Team C]) --> B8{{Separate Erasure Logic}}
+            B8 --> B9([System C Data])
+
+            noteB["• No standardization<br/>• Inconsistent security & compliance<br/>• Each team reimplements logic"]
+            noteB -.-> B5
+          end
+      </div>
+    </div>
+
+    <div id="dataFlowDiagramModal" class="diagram-modal">
+      <!-- The close "X" button -->
+      <span
+        class="close"
+        onclick="closeModal('dataFlowDiagramModal')"
+        aria-label="Close modal"
+      >
+        &times;
+      </span>
+      <div class="diagram-modal-content">
+
+        <div class="mermaid" id="dataFlowDiagramFull"></div>
+      </div>
+    </div>
+
+
+
     <h2>3. Solution &amp; Alternative Approaches</h2>
     <p>
       To tackle these challenges, I designed and implemented a unified, reusable adapter as a Spring Boot configuration packaged into a Maven plugin. This plug‐and‐play model enabled teams to simply add the dependency and implement a single Java interface for their specific business logic, abstracting away the intricate and repetitive integration tasks.
