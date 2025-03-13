@@ -324,6 +324,133 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       </div>
     </div>
 
+
+
+
+    <h3>4.4 Component Diagram – Plugin Architecture</h3>
+    <p>
+      The Reusable Data Erasure Plugin is divided into several Spring Boot modules, each focusing on a
+      specific responsibility in the data erasure workflow. By separating these concerns, teams
+      adopting the plugin only need to implement a minimal business logic interface, leaving
+      configurations for Kafka, IBM MQ, Avro schemas, and REST endpoints to be handled automatically.
+      Below is an overview of how each module fits together:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Spring Boot Integration Layer:</strong>
+        Orchestrates all plugin components via Spring’s auto-configuration. Once a microservice declares
+        the plugin dependency, this layer automatically wires up Kafka or IBM MQ routes, REST endpoints,
+        and error handling, minimizing boilerplate code.
+      </li>
+      <li>
+        <strong>Kafka Config Module:</strong>
+        Manages producers and consumers for event-driven teams using Kafka. It pulls Avro schemas from
+        the Confluent Schema Registry, handles serialization/deserialization, and sets up consumer group
+        IDs to isolate different environments (e.g., dev, test, prod).
+      </li>
+      <li>
+        <strong>IBM MQ Config Module:</strong>
+        Ensures backward compatibility for teams still on IBM MQ. It uses parallel DTO classes and
+        messaging routes so older adapters continue to function without forced migration. This allows
+        for a gradual, non-disruptive transition to Kafka if desired.
+      </li>
+      <li>
+        <strong>Default REST Endpoints:</strong>
+        Provides ready-made Spring Boot controllers for manual testing or special use cases (e.g.,
+        manually adding erasure requests or triggering retries). Teams can leverage these endpoints
+        without having to spin up their own controllers.
+      </li>
+      <li>
+        <strong>Common Error Handling:</strong>
+        Centralizes all exception handling, logging, and fallback strategies, reducing the risk of
+        inconsistent error responses across different adapters. This uniform approach significantly
+        lowers production incidents related to unhandled or poorly handled edge cases.
+      </li>
+      <li>
+        <strong>Business Logic Interface (API):</strong>
+        A simple Java interface (e.g., <code>DataErasureAdapter</code>) that each team implements to
+        define how they erase data in their own systems. This encapsulation frees teams from having
+        to learn low-level Kafka, IBM MQ, or Avro details, and allows them to focus solely on their
+        domain-specific logic.
+      </li>
+      <li>
+        <strong>Avro Schema &amp; Registry Integration:</strong>
+        Automates the retrieval and compilation of Avro schemas from Confluent’s Schema Registry. This
+        ensures strong typing and easy versioning for messages, and prevents schema mismatches from
+        causing runtime errors.
+      </li>
+      <li>
+        <strong>Maven Plugin Logic:</strong>
+        Bundles everything into a single dependency that teams add to their <code>pom.xml</code>.
+        It takes care of generating Java classes from Avro schemas, loading the correct Spring
+        configuration classes, and providing an all-in-one solution that drastically reduces setup
+        time.
+      </li>
+    </ul>
+
+    <div class="diagram-thumbnail" onclick="openModal('componentDiagramModal', 'componentDiagramFull')">
+      <div class="mermaid" id="componentDiagram">
+        flowchart TB
+        %% Title: Reusable Erasure Plugin - Component Diagram
+
+        %% The plugin’s internal modules
+        subgraph REPlugin["Reusable Erasure Plugin"]
+        direction TB
+          A1["Spring Boot Integration Layer"]:::component
+          A2["Kafka Config Module"]:::component
+          A3["IBM MQ Config Module"]:::component
+          A4["Default REST Endpoints"]:::component
+          A5["Common Error Handling"]:::component
+          A6["Business Logic Interface (API)"]:::component
+          A7["Avro Schema & Registry Integration"]:::component
+          A8["Maven Plugin Logic"]:::component
+
+          %% Show relationships among modules inside the plugin
+          A1 --> A2
+          A1 --> A3
+          A1 --> A4
+          A1 --> A5
+          A1 --> A6
+          A1 --> A7
+          A1 --> A8
+        end
+
+        %% External entities
+        Msvc["Spring Boot Microservice"]:::ext
+        DB["Client Database"]:::ext
+        Kafka["Kafka Broker"]:::ext
+        IBMMQ["IBM MQ"]:::ext
+        AvroReg["Avro Schema Registry"]:::ext
+
+        %% Microservice depends on the plugin
+        Msvc -->|uses| REPlugin
+
+        %% Optional references from plugin modules to external systems
+        A2 -- connects to --> Kafka
+        A3 -- connects to --> IBMMQ
+        A7 -- fetches schemas --> AvroReg
+        %% The microservice or plugin might interact with the DB
+        Msvc --data ops--> DB
+
+        classDef component fill:#E6E6FA,color:#000,stroke:#000,stroke-width:1px
+        classDef ext fill:#EEE,color:#333,stroke-dasharray:5 5,stroke-width:1px
+      </div>
+    </div>
+
+    <!-- Modal for the component diagram -->
+    <div id="componentDiagramModal" class="diagram-modal">
+      <span class="close" onclick="closeModal('componentDiagramModal')">&times;</span>
+      <div class="diagram-modal-content">
+        <div class="mermaid" id="componentDiagramFull"></div>
+      </div>
+    </div>
+
+
+
+
+    <!-- ====================================================================================================== -->
+
     <h2>5. Results &amp; Impact</h2>
     <p>
       The implementation of this reusable data erasure adapter produced far-reaching benefits, both immediate and long-term:
