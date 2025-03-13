@@ -97,6 +97,66 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
     <p>
       To tackle these challenges, I designed and implemented a unified, reusable adapter as a Spring Boot configuration packaged into a Maven plugin. This plug‐and‐play model enabled teams to simply add the dependency and implement a single Java interface for their specific business logic, abstracting away the intricate and repetitive integration tasks.
     </p>
+
+
+
+    <h3>3.1 Integration Flow — How Services Use the Plugin</h3>
+    <div class="diagram-thumbnail" onclick="openModal('serviceIntegrationDiagramModal', 'serviceIntegrationDiagramFull')">
+      <div class="mermaid" id="serviceIntegrationDiagram">
+        sequenceDiagram
+        autonumber
+
+        participant BIA as BI Analytics Team
+        participant ORCH as Data Erasure Orchestration Service
+        participant MQ as Kafka / IBM MQ
+        participant Client as Client Service(s)
+        participant Plugin as Reusable Erasure Plugin (New)
+        participant DB as Client Database
+
+        BIA->>ORCH: (1) Submit Data Erasure Request
+        ORCH->>ORCH: (2) Log/Authorize & Prepare Request
+        ORCH->>MQ: (3) Publish Erasure Request to All Registered Clients
+        MQ-->>Client: (4) Deliver Erasure Request
+
+        alt Old Adapter
+          note right of Client: Some clients still use <br> older IBM MQ or custom logic
+          Client->>DB: (5a) Erase Data via Legacy Adapter
+          DB-->>Client: (6a) Acknowledge Erasure
+        else New Plugin
+          note right of Client: Others use the <br> Reusable Data Erasure Plugin
+          Client->>Plugin: (5b) Invoke Plugin with Erasure Details
+          Plugin->>Plugin: (6b) Validate & Log Operation
+          Plugin->>DB: (7b) Execute Erasure in Client’s Database
+          DB-->>Plugin: (8b) Acknowledge Erasure
+          Plugin->>Plugin: (9b) Update Audit Logs
+          Plugin-->>Client: (10b) Return Success/Failure
+        end
+
+        Client->>MQ: (11) Send Erasure Response (Success/Failure)
+        MQ-->>ORCH: (12) Forward Responses
+        ORCH->>ORCH: (13) Track Completion from All Clients
+        ORCH-->>BIA: (14) Provide Final Erasure Status (Consolidated)
+      </div>
+    </div>
+
+    <!-- Diagram Modal for Sequence Diagram -->
+    <div id="serviceIntegrationDiagramModal" class="diagram-modal">
+      <!-- The close "X" button -->
+      <span
+        class="close"
+        onclick="closeModal('serviceIntegrationDiagramModal')"
+        aria-label="Close modal"
+      >
+        &times;
+      </span>
+      <div class="diagram-modal-content">
+
+        <div class="mermaid" id="serviceIntegrationDiagramFull"></div>
+      </div>
+    </div>
+
+
+    <br/>
     <p>
       Early on, I explored several alternative approaches. One option was to have each team develop and maintain its own adapter for processing data erasure requests. However, this decentralized strategy led to duplicated boilerplate code, inconsistent error-handling routines, and a significant maintenance burden—often resulting in ramp-up times of up to six weeks per team. Another idea was to create separate configurations for each messaging system, such as one for legacy IBM MQ and another for Kafka. While this might have addressed some integration needs, it introduced unnecessary complexity and made it difficult to scale as the number of adapters grew.
     </p>
