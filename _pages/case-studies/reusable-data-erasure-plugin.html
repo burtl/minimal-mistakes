@@ -41,8 +41,8 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
         <a href="#technical-implementation">4. Technical Implementation</a>
         <ul>
           <li><a href="#minimal-interface">4.1 Minimal “Plug-and-Play” Interface</a></li>
-          <li><a href="#sequence-diagram">4.2 Sequence Diagram – Dual Paths</a></li>
-          <li><a href="#flowchart">4.3 Flowchart – Reusable Data Erasure Plugin</a></li>
+          <li><a href="#sequence-diagram-header">4.2 Sequence Diagram – Dual Paths</a></li>
+          <li><a href="#flowchart-header">4.3 Flowchart – Reusable Data Erasure Plugin</a></li>
           <li><a href="#component-diagram">4.4 Component Diagram – Plugin Architecture</a></li>
         </ul>
       </li>
@@ -268,7 +268,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       Overall, this technical foundation—Spring Boot auto-configuration, Maven plugin encapsulation, Avro-based Kafka messaging, and Apache Camel routes—created a streamlined, flexible framework. It minimized repetitive coding tasks, ensured consistent standards across adapters, and laid the groundwork for a smooth transition from IBM MQ to Kafka, ultimately reducing development time, cutting costs, and elevating the reliability of GDPR erasure processing across the organization.
     </p>
 
-    <h3 id="sequence-diagram">4.2 Sequence Diagram – Dual Paths (Legacy MQ & Kafka)</h3>
+    <h3 id="sequence-diagram-header">4.2 Sequence Diagram – Dual Paths (Legacy MQ & Kafka)</h3>
     <div class="diagram-thumbnail" onclick="openModal('sequenceDiagramModal', 'sequenceDiagramFull')">
       <div class="mermaid" id="sequenceDiagram">
         sequenceDiagram
@@ -322,7 +322,7 @@ permalink: /projects/case-studies/reusable-data-erasure-plugin/
       </div>
     </div>
 
-    <h3 id="flowchart">4.3 Flowchart – Reusable Data Erasure Plugin</h3>
+    <h3 id="flowchart-header">4.3 Flowchart – Reusable Data Erasure Plugin</h3>
     <div class="diagram-thumbnail" onclick="openModal('flowchartModal', 'flowchartFull')">
       <div class="mermaid" id="flowchart">
         flowchart LR
