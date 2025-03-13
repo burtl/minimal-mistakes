@@ -79,6 +79,21 @@ nav a:last-child {
   }
 }
 
+
+
+
+a.btn.btn--light-outline.btn--large {
+  transition: transform 0.2s ease-in-out !important;
+}
+
+a.btn.btn--light-outline.btn--large:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+
+
 /* ==========================================================================
    For code blocks
    ========================================================================== */
